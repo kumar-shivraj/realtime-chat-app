@@ -1,7 +1,10 @@
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 import assets, { userDummyData } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 
 const Sidebar = ({ selectedUser, setSelectedUser }) => {
+  const { logout } = useContext(AuthContext)
   const navigate = useNavigate()
   return (
     <div className={`bg-[#818582]/10 h-full p-5 rounded-r-xl overflow-y-scroll text-white ${selectedUser ? 'max-md:hidden' : ''}`}>
@@ -17,7 +20,11 @@ const Sidebar = ({ selectedUser, setSelectedUser }) => {
               >Edit Profile
               </p>
               <hr className='my-2 border-t border-gray-500' />
-              <p className='cursor-pointer text-sm'>Logout</p>
+              <p
+                className='cursor-pointer text-sm'
+                onClick={() => logout()}
+              >Logout
+              </p>
             </div>
           </div>
         </div>
@@ -42,15 +49,15 @@ const Sidebar = ({ selectedUser, setSelectedUser }) => {
             <div className='flex flex-col leading-5'>
               <p>{user.fullName}</p>
               {
-                                index < 3
-                                  ? <span className='text-green-400 text-xs'>Online</span>
-                                  : <span className='text-neutral-400 text-xs'>Offline</span>
-                            }
+               index < 3
+                 ? <span className='text-green-400 text-xs'>Online</span>
+                 : <span className='text-neutral-400 text-xs'>Offline</span>
+              }
             </div>
 
             {
-                            index > 2 && <p className='absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/50'>{index}</p>
-                        }
+              index > 2 && <p className='absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/50'>{index}</p>
+            }
           </div>
         ))}
       </div>
