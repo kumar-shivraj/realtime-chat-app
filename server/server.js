@@ -4,6 +4,7 @@ import cors from 'cors'
 import http from 'http'
 import connectDB from './lib/db.js'
 import userRouter from './routes/user.route.js'
+import messageRouter from './routes/message.route.js'
 
 // create express app using HTTP server, because socket.io needs an HTTP server
 const app = express()
@@ -13,11 +14,12 @@ const server = http.createServer(app)
 app.use(express.json({ limit: '4mb' }))
 app.use(cors())
 
-// route setup
+// routes setup
 app.use('/api/status', (req, res) => {
   res.status(200).json({ status: 'Server is live' })
 })
 app.use('/api/auth', userRouter)
+app.use('/api/messages', messageRouter)
 
 // connect to MongoDB
 await connectDB()
