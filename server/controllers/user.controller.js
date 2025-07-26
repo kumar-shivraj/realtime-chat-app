@@ -45,7 +45,7 @@ export const signup = async (req, res) => {
 
 // login a user
 export const login = async (req, res) => {
-  console.log("inside login controller")
+  console.log('inside login controller')
   try {
     const { email, password } = req.body
     const userData = await User.findOne({ email })
@@ -74,7 +74,7 @@ export const login = async (req, res) => {
 
 // check if user is authenticated
 export const checkAuth = (req, res) => {
-  console.log("inside checkAuth controller")
+  console.log('inside checkAuth controller')
   if (req.user) {
     return res.json({ success: true, user: req.user })
   } else {
@@ -84,7 +84,7 @@ export const checkAuth = (req, res) => {
 
 // update user profile details
 export const updateProfile = async (req, res) => {
-  console.log("inside updateProfile controller")
+  console.log('inside updateProfile controller')
   try {
     const { profilePic, bio, fullName } = req.body
     const userId = req.user._id
