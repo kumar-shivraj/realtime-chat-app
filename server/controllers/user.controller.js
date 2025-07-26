@@ -71,3 +71,12 @@ export const login = async (req, res) => {
         });
     }
 }
+
+// check if user is authenticated
+export const checkAuth = (req, res) => {
+    if (req.user) {
+        return res.json({ success: true, user: req.user });
+    } else {
+        return res.status(401).json({ success: false, message: "Not authenticated" });
+    }
+}
