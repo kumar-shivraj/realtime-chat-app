@@ -14,7 +14,7 @@ const server = http.createServer(app)
 // initialize socket.io server
 export const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: '*'
   }
 })
 
@@ -23,11 +23,10 @@ export const userSocketMap = {} // {userId: socketId}
 
 // socket.io connection handler
 io.on('connection', (socket) => {
-  const userId = socket.handshake.query.userId;
+  const userId = socket.handshake.query.userId
   console.log('A user connected:', socket.id)
 
-  if(userId) 
-      userSocketMap[userId] = socket.id;
+  if (userId) { userSocketMap[userId] = socket.id }
 
   // emit online users to all connected clients
   io.emit('getOnlineUsers', Object.keys(userSocketMap))
@@ -37,7 +36,6 @@ io.on('connection', (socket) => {
     delete userSocketMap[userId]
     io.emit('getOnlineUsers', Object.keys(userSocketMap))
   })
-
 })
 
 // middleware setup
