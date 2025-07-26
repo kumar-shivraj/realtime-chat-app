@@ -5,6 +5,7 @@ import User from '../models/user.model.js'
 
 // signup a new user
 export const signup = async (req, res) => {
+  console.log(`inside signup controller, request body: ${JSON.stringify(req.body)}`)
   const { fullName, email, password, bio } = req.body
   try {
     if (!fullName || !email || !password || !bio) {
@@ -44,6 +45,7 @@ export const signup = async (req, res) => {
 
 // login a user
 export const login = async (req, res) => {
+  console.log("inside login controller")
   try {
     const { email, password } = req.body
     const userData = await User.findOne({ email })
@@ -72,6 +74,7 @@ export const login = async (req, res) => {
 
 // check if user is authenticated
 export const checkAuth = (req, res) => {
+  console.log("inside checkAuth controller")
   if (req.user) {
     return res.json({ success: true, user: req.user })
   } else {
@@ -81,6 +84,7 @@ export const checkAuth = (req, res) => {
 
 // update user profile details
 export const updateProfile = async (req, res) => {
+  console.log("inside updateProfile controller")
   try {
     const { profilePic, bio, fullName } = req.body
     const userId = req.user._id
