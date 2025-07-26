@@ -1,28 +1,25 @@
-import express from 'express';
-import "dotenv/config";
-import cors from 'cors';
-import http from 'http';
-import { connect } from 'http2';
-import connectDB from './lib/db.js';
-
+import express from 'express'
+import 'dotenv/config'
+import cors from 'cors'
+import http from 'http'
+import connectDB from './lib/db.js'
 
 // create express app using HTTP server, because socket.io needs an HTTP server
-const app = express();
-const server = http.createServer(app);
+const app = express()
+const server = http.createServer(app)
 
 // middleware setup
-app.use(express.json({limit: '4mb'}));
-app.use(cors());
+app.use(express.json({ limit: '4mb' }))
+app.use(cors())
 
-
-app.use("/api/status", (req, res) => {
-    res.status(200).json({status: "Server is live"});
-});
+app.use('/api/status', (req, res) => {
+  res.status(200).json({ status: 'Server is live' })
+})
 
 // connect to MongoDB
-await connectDB();
+await connectDB()
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000
 server.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+  console.log(`Server is running on port ${PORT}`)
+})
