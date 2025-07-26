@@ -1,3 +1,4 @@
+import cloudinary from '../lib/cloudinary'
 import { generateToken } from '../lib/utils'
 import User from '../models/User.model'
 import bcrypt from 'bcryptjs'
@@ -75,5 +76,41 @@ export const checkAuth = (req, res) => {
     return res.json({ success: true, user: req.user })
   } else {
     return res.status(401).json({ success: false, message: 'Not authenticated' })
+  }
+}
+
+// update user profile details
+export const updateProfile = async (req, res) => {
+  try {
+    const { profilePic, bio, fullName } = req.body
+    const userId = req.user._id
+    let updatedUser
+    if (!profilePic) {
+      updatedUser = await User.findByIdAndUpdate(userId, {
+        bio,
+        fullName
+      },
+      { new: true }
+      )
+    } else {
+      const upload = await cloudinary.uploader.upload(profilePic)
+      updatedUser = await User.findByIdAndUpdate(userId, {
+        bio,
+        fullName,
+        profilePic: upload.secure_url
+      },
+      { new: true }
+      )
+    }
+    res.json({
+      success: true,
+      user: updatedUser
+    })
+  } catch (error) {
+    console.log(error.message)
+    return res.status(500).json({
+      success: false,
+      message: error.message || 'Internal server error'
+    })
   }
 }
