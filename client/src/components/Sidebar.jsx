@@ -56,7 +56,10 @@ const Sidebar = () => {
           <div
             key={index}
             className={`relative flex items-center gap-2 p-2 pl-4 rounded cursor-pointer max-sm:text-sm ${selectedUser?._id === user._id && 'bg-[#282142]/50'}`}
-            onClick={() => setSelectedUser(user)}
+            onClick={() => {
+              setSelectedUser(user)
+              setUnseenMessages((prev) => ({ ...prev, [user._id]: 0 }))
+            }}
           >
             <img
               src={user?.profilePic || assets.avatarIcon} alt=''

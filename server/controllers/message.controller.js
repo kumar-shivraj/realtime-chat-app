@@ -96,7 +96,7 @@ export const sendMessage = async (req, res) => {
       imageUrl = uploadResponse.secure_url
     }
 
-    const newMessage = Message.create({
+    const newMessage = await Message.create({
       senderId,
       receiverId,
       text,
@@ -109,9 +109,9 @@ export const sendMessage = async (req, res) => {
       io.to(receiverSocketId).emit('newMessage', newMessage)
     }
 
-    res.status(200).json({
+    res.json({
       success: true,
-      message: newMessage
+      newMessage
     })
   } catch (error) {
     console.error(error)
